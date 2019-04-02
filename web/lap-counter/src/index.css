@@ -1,0 +1,75 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  font-family: Khand, sans-serif;
+  height: 100vh;
+  background: #3c4a61;
+  color: white;
+}
+
+#header {
+  flex-grow: 0;
+  font-size: 10vh;
+  text-align: center;
+}
+
+#menu {
+  flex-grow: 0;
+  font-size: 8vh;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 15vw;
+}
+
+#race-state {
+  color: #ebd16a;
+}
+
+#stopwatch {
+  margin-left: 20px;
+  font-family: 'Overpass Mono', monospace;
+}
+
+#buttons {
+  font-size: 4vh;
+  text-align: center;
+  padding: 1vw 0;
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+}
+
+.block {
+  display: inline-block;
+  padding: 0 10px
+}
+
+input {
+  font-family: Khand, sans-serif;
+  font-size: 4vh;
+}
+
+#content table {
+  border-collapse: collapse;
+}
+
+#content th, td {
+  font-size: 5vh;
+  padding: 10px 2vw;
+  margin: 0;
+  border: 1px solid #d5d5d5;
+
+}
+
+#content input {
+  margin: 0 5px;
+  padding: 0 10px;
+  font-size: 4vh;
+}
+
+.hidden {
+  display: none;
+}
