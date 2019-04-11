@@ -2,6 +2,13 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import RobotList from './components/RobotList'
+import { subscribeToServer } from './connectorToBase';
+import { Button } from '@salesforce/design-system-react';
+import IconSettings from '@salesforce/design-system-react/lib/components/icon-settings';
+import GlobalHeader from '@salesforce/design-system-react/lib/components/global-header'; 
+import GlobalHeaderButton from '@salesforce/design-system-react/lib/components/global-header/button';
+import GlobalHeaderDropdown from '@salesforce/design-system-react/lib/components/global-header/dropdown';
+import Card from '@salesforce/design-system-react/lib/components/card';
 
 class App extends Component {
 
@@ -13,36 +20,97 @@ class App extends Component {
             {id : 4, laps : 0, name : 'SUBARU4'},
             {id : 5, laps : 0, name : 'SUBARU5'},
             {id : 6, laps : 0, name : 'SUBARU6'}
-        ]
+        ],
+        race : {
+            state : 'STOPPED'
+        },
+        timestamp: 'no timestamp yet'
     }
+
+    onMessage = (message) => {
+        console.log('message');
+    };
+
+    onError = (error) => {
+        console.log('error');
+    };
+
+    onClose = (close) => {
+        console.log('close');
+    };
+
+    onOpen = (open) => {
+        console.log('open');
+    };
+
+    constructor(props) {
+        super(props);
+        subscribeToServer(this.onMessage, this.onError, this.onClose, this.onOpen);
+    }
+
 
     render() {
         return (
         <div id="root">
-            <div id="header">Roborace Laps Counter</div>
-            <div id="menu">
-                <div>State: <span id="race-state">NOT CONNECTED</span></div>
-                <div>Race Time: <span id="stopwatch">0:00.000</span></div>
-            </div>
-            <div id="content">
-                <RobotList robots={this.state.robots}/>
-            </div>
-            <div id="buttons">
-                <div id="config" class="block">
-                    <input type="text" id="ip" value="ws://192.168.1.200"/>
-                    <input type="button" id="btn-connect" value="Connect"/>
+            <IconSettings iconPath="/icons">
+                <div className="slds-grid slds-grid_vertical">
+                    <GlobalHeader
+                        logoSrc="/logo.jpg"
+                        onSkipToContent={() => {
+                            console.log('>>> Skip to Content Clicked');
+                        }}
+                        onSkipToNav={() => {
+                            console.log('>>> Skip to Nav Clicked');
+                        }}
+                    >
+                        <GlobalHeaderDropdown
+                            assistiveText={{ icon: 'Global Actions' }}
+                            id="global-header-dropdown-example"
+                            iconCategory="utility"
+                            iconName="add"
+                            onSelect={() => {
+                                console.log('>>> onSelect');
+                            }}
+                            options={[{ label: 'New Note' }, { label: 'Log a Call' }]}
+                        />
+                        <GlobalHeaderButton
+                            assistiveText={{ icon: 'Help and Training' }}
+                            iconCategory="utility"
+                            iconName="question"
+                            onClick={() => {
+                                console.log('>>> onClick');
+                            }}
+                        />
+                        <GlobalHeaderButton
+                            assistiveText={{ icon: 'Setup' }}
+                            iconCategory="utility"
+                            iconName="settings"
+                            onClick={() => {
+                                console.log('>>> onClick');
+                            }}
+                        />
+                    </GlobalHeader>
+                    
+                    <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-center" >
+                        <Card
+                            id="settingsCard"
+                            heading="Releated Items"
+                            headerActions={
+                                (
+                                    <Button
+                                        label="Delete All Items"
+                                        onClick={this.handleDeleteAllItems}
+                                    />
+                                )
+                            }
+                        >
+                            sdsdsdsdsd
+                        </Card>
+                    </div>
                 </div>
-                <div id="control" class="block">
-                    <input type="button" class="btn-command" id="btn-ready" value="READY" data-command="READY"
-                            className="hidden"/>
-                    <input type="button" class="btn-command" id="btn-steady" value="STEADY" data-command="STEADY"
-                            className="hidden"/>
-                    <input type="button" class="btn-command" id="btn-go" value="GO" data-command="RUNNING"
-                            className="hidden"/>
-                    <input type="button" class="btn-command" id="btn-finish" value="FINISH" data-command="FINISH"
-                            className="hidden"/>
-                </div>
-            </div>
+            </IconSettings>
+            
+            <Button label="Settings" variant="brand"/>
             
         </div>
         );
